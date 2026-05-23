@@ -1,0 +1,8 @@
+npm init --yes
+npm install --save express
+npm install -g nodemon
+npm install --save mongoose
+npm install --save express-session
+npm install --save body-parser
+npm install --save joi
+npm install --save uuid

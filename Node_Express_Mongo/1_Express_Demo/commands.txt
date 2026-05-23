@@ -1,0 +1,15 @@
+npm init --yes
+npm install express
+npm install -g nodemon
+
+INSERT INTO gen_office_setting (i_office_id,c_code,c_value,i_status,c_input_user,t_input_date,c_update_user,t_update_date,c_name)
+VALUES (0,'DEFAULT_LIVE_RATES_OCEAN_BKG','Y',1,'nsalot',sysdate,null,null,'Display live rates by default in booking');
+
+INSERT INTO gen_office_setting (i_office_id,c_code,c_value,i_status,c_input_user,t_input_date,c_update_user,t_update_date,c_name)
+VALUES (0,'DEFAULT_LIVE_RATES_OCEAN_BOL','Y',1,'nsalot',sysdate,null,null,'Display live rates by default in bill of lading');
+
+INSERT INTO gen_office_setting (i_office_id,c_code,c_value,i_status,c_input_user,t_input_date,c_update_user,t_update_date,c_name)
+VALUES (0,'COPY_QUOTE_RATES_OCEAN_BKG','Y',1,'nsalot',sysdate,null,null,'copy quote rates into booking');
+
+INSERT INTO gen_office_setting (i_office_id,c_code,c_value,i_status,c_input_user,t_input_date,c_update_user,t_update_date,c_name)
+VALUES (0,'COPY_BKG_RATES_OCEAN_BOL','Y',1,'nsalot',sysdate,null,null,'copy booking rates into bill of lading');
