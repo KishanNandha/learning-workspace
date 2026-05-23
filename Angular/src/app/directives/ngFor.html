@@ -1,0 +1,14 @@
+<div class="div">
+    <input type="text" #course="ngModel" ngModel >
+    <button class="btn btn-success" [class.disabled]="courseName" (click) = "onAdd(course); course.value=''">
+        Add
+    </button>
+</div>
+<hr/>
+<br/>
+<ul *ngFor="let course of courses; trackBy: trackMethod">
+    <li>
+        {{ course.id +" "+course.name  }}
+        <button class="btn btn-danger" (click) = "onRemove(course)">Remove</button>
+    </li>
+</ul>

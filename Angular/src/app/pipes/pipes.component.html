@@ -1,0 +1,15 @@
+{{ course.title | uppercase }}
+<br/>
+{{ course.students | number }}
+<br/>
+{{ course.rating | number: '1.2-2' }}
+<br/>
+{{ course.price | currency }}
+<br/>
+{{ course.price | currency:"INR" }}
+<br/>
+{{ course.price | currency:"INR":false }}
+<br/>
+{{ course.releaseDate | date }}
+<br/>
+{{ course.releaseDate | date:'longDate' }}

@@ -1,0 +1,38 @@
+<form #myForm="ngForm" class="form" (ngSubmit)="onSubmit(myForm)">
+  <div ngModelGroup="userinfo"> <!-- this will give all values as json object -->
+      <div class="form-group">
+          <label  for="firstName" >First Name</label>
+          <input required ngModel name="firstName" #firstName="ngModel" type="text" id="firstName" (change)="onChange(firstName)" class="form-control">
+          <div class="alert alert-danger" *ngIf="firstName.touched &&  !firstName.valid">First Name is required!</div>
+        </div>
+        <div class="form-group">
+          <label for="comment">Comments</label>
+          <textarea type="text" cols="30" rows="10" id="comment" class="form-control" ngModel name="comment"></textarea>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ngModel name="isSubscribed">
+            Subscribed
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="contactMethod">Contact Method</label>
+          <select ngModel name="contactMethod" id="contactMethod" class="form-control">
+            <option value=""></option>
+            <option *ngFor="let method of contactMethods" [ngValue]="method">{{ method.name }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div *ngFor="let method of contactMethods" class="radio">
+            <label>
+              <input type="radio" ngModel name="contactMethod2" [value]="method.id">
+              {{ method.name }}
+            </label>
+          </div>
+        </div>
+  </div>
+  <p>
+    {{ myForm.value | json }}
+  </p>
+  <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+</form>

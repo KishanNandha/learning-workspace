@@ -1,0 +1,7 @@
+<div *ngIf ="!myCon; then data1 else data2"></div>
+<ng-template #data1>
+    {{ "if block" }}
+</ng-template>
+<ng-template #data2>
+        {{ "else block" }}
+    </ng-template>

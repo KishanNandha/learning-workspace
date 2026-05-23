@@ -1,0 +1,3 @@
+npm install rxjs-compat for using old rxjs import with angular 6
+npm install --save web-animations-js 
+npm install --save @angular/cdk @angular/meterial @angular/animations hammerjs
