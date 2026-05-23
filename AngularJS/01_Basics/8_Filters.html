@@ -1,0 +1,19 @@
+<html ng-app="myApp">
+    <head>
+        <title></title>
+        <script src="../angular.js"></script>
+        <script>
+            (function () {
+                var moduleName = "myApp";
+                var required = [];
+                var myApp = angular.module(moduleName,required);
+                myApp.controller("AppCtrl",function () {
+                    
+                });
+            }()); 
+        </script>
+    </head>   
+    <body   ng-controller="AppCtrl as app">
+        {{ 'Kishan' | uppercase }}
+    </body>
+</html>

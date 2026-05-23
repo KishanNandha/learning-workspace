@@ -1,0 +1,73 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Array Transforming Filters</title>
+  <script src="../angular.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.controller("AppCtrl", function($scope) {
+		    $scope.courses = [
+                { name: "QuickStart AngularJS", category: "Development" , timeline: 30, price: 25 },
+				{ name: "The Secrets to Drawing", category: "Lifestyle" , timeline: 40, price: 49 },
+				{ name: "Become a Certified Web Developer", category: "Development" , timeline: 80, price: 199 },
+                { name: "How to Draft a Business Plan", category: "Business" , timeline: 20, price: 99 },
+				{ name: "Body Language for Entrepreneurs", category: "Personal Development" , timeline: 40, price: 149 },
+				{ name: "User Experience Design Fundamentals", category: "Design" , timeline: 20, price: 40 },
+				{ name: "Google Adwords for Beginners", category: "Marketing" , timeline: 25, price: 599 },
+				{ name: "Music Theory Classes", category: "Music" , timeline: 20, price: 20 },
+				{ name: "Everyday Mind Mastery", category: "Personal Development" , timeline: 30, price: 30 },
+				{ name: "SEO for StartUp Business", category: "Marketing" , timeline: 40, price: 40 }
+		    ];
+			
+			$scope.getTargetDate = function(days) {
+				var now = new Date();
+				return now.setDate(now.getDate() + days);
+			}
+			
+			$scope.limitVal = 10;
+			
+			$scope.lessThan25 = function(item) {
+				return item.price < 25;
+			}
+		});
+	}());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+	<h1>Courses - {{courses.length}}</h1>
+	<button ng-click="limitVal = 5">5</button>
+	<button ng-click="limitVal = 10">10</button> <br />
+	Name: <input type="text" ng-model="name" /> <br />
+	Category: <input type="text" ng-model="category" /> <br />
+	Price: <input type="text" ng-model="price" /> 
+	<table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Course Name</th>
+                <th>Category</th>
+                <th>Timeline</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="course in courses | limitTo:limitVal | orderBy:['name', '-price'] | filter:{name,category,price}">
+                <td>{{$index+1}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.category}}</td>
+                <td>{{getTargetDate(course.timeline) | date:"dd MMM yy"}}</td>
+                <td>{{course.price | currency}}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

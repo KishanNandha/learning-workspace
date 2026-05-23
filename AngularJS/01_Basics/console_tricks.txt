@@ -1,0 +1,14 @@
+$0 to get currently selected element
+
+to get current angular version of element
+ angular.element($0)
+
+to get scope for angular element
+
+ angular.element($0).scope()
+
+Modify model from console:
+
+angular.element($0).scope().PROPERTY = "NEW VALUE";
+angular.element($0).scope().digest()
+

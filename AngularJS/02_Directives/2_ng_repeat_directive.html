@@ -1,0 +1,102 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Binding Directives</title>
+  <script src="../angular.js"></script>
+  <style>
+      .odd {
+          background-color: tan;
+      }
+      .even {
+          background-color: gray;
+      }
+  </style>
+  <script>      
+        (function () {
+              var name = "myApp",requires = [],myApp = null;
+              myApp = angular.module(name, requires);
+              myApp.controller("AppCtrl", function ($scope) {
+                  $scope.contacts = [{ firstname: "John", lastname: "Smith", favourite: true },{ firstname: "Jimmy", lastname: "Jacob", favourite: false },{ firstname: "Charles", lastname: "Bailey", favourite: false },{ firstname: "Jacob", lastname: "Bateman", favourite: true },{ firstname: "Andrew", lastname: "Baxter", favourite: false }];
+              });
+        }());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Favourite</th>
+                <th>$first</th>
+                <th>$last</th>
+                <th>$middle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ng-repwat is used as for each loop -->
+            <!-- $odd and $even is set by angular --> 
+            <!-- ng-class is used to give class at run time -->
+            <tr ng-repeat="contact in contacts" ng-class="$odd ? 'odd' : 'even'">
+                <div>
+                    This is start of the table
+                </div>
+                <!-- $index variable is set by angular it is counter -->
+                <td>{{$index+1}}</td>
+                <td>{{contact.firstname}}</td>
+                <td>{{contact.lastname}}</td>
+                <td>{{contact.favourite}}</td>
+                <td>{{$first}}</td>
+                <td>{{$last}}</td>
+                <td>{{$middle}}</td>
+                <div>
+                    This is end of the table
+                </div>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li ng-repeat="prop in contacts[0]">{{prop}}</li>
+    </ul>
+
+    <ul>
+        <li ng-repeat="(key, value) in contacts[0]">{{key}} = {{value}}</li>
+    </ul>
+
+    <!--<table>
+        <tbody>
+            <tr>
+                <td>This is contact number - 1</td>
+            </tr>
+            <tr>
+                <td>Full Name: John Smith</td>
+            </tr>
+            <tr>
+                <td>Is contact in favourite list: true</td>
+            </tr>
+        </tbody>
+    </table>-->
+
+    <table>
+        <tdata>
+            <tr ng-repeat-start="contact in contacts">
+                <td>This is contact number - {{$index+1}}</td>
+            </tr>
+            <tr>
+                <td>Full Name: {{contact.firstname}} {{conact.lastname}}</td>
+            </tr>
+            <tr ng-repeat-end>
+                <td>Is contact in favourite list: {{contact.favourite}}</td>
+            </tr>
+            <tr>
+                <td>___________________________________</td>
+            </tr>
+        </tdata>
+
+    </table>
+</body>
+</html>

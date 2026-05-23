@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Event Directives</title>
+  <script src="../angular.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.controller("AppCtrl", function($scope) {			
+			$scope.eventHandler = function(evt) {
+				console.log("Event type: " + evt.type + " triggered!");
+			}
+		});
+	}());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+	<button ng-click="eventHandler($event)"
+		ng-mousedown="eventHandler($event)"
+		ng-mouseenter="eventHandler($event)"
+		ng-mouseleave="eventHandler($event)"
+		ng-mouseup="eventHandler($event)">Button</button>
+</body>
+</html>

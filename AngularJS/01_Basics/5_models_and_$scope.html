@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title></title>
+        <script src="../angular.js"></script>
+        <script>
+            (function() {
+                var name = "myApp";
+                var required = [];
+                var app = angular.module(name,required);
+                //this is controller
+                app.controller("myController", function ($scope) {
+                    //$scope is globle var per controller
+                    //employee is model
+                    $scope.employee = {
+                        name : "kishan",
+                        age: "21"
+                    };
+                });
+            }())
+        </script>
+    </head>
+    <body ng-app="myApp">
+        <div ng-controller="myController">
+            {{ employee.name}} + {{employee.age}}
+        </div>
+    </body>
+</html>

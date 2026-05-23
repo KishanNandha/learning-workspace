@@ -1,0 +1,185 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <title>Routing</title>
+  <script src="../angular.js"></script>
+  <script src="../angular-route.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = ['ngRoute'],
+			myApp = null,
+			url = "https://api.mongolab.com/api/1/databases/my-academy/collections/course",
+			config = {params: {apiKey:"d6zTllhhzvkZbocn1a_fGMubqSpAiVgs"}};
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.config(function($routeProvider) {
+			$routeProvider
+				.when("/courses", {
+					templateUrl: "partials/course_list.html",
+					controller: "CourseCtrl"
+				})
+				.when("/course/add", {
+					templateUrl: "partials/add_course.html",
+					controller: "CourseCtrl"
+				})
+				.when("/course/edit/:id", {
+					templateUrl: "partials/edit_course.html",
+					controller: "CourseCtrl"
+				})
+				.otherwise({
+					redirectTo: "/courses"
+				})
+		});
+		
+		myApp.factory("courseDataSvc", function($http, $q) {
+			return {
+				getCourses: function() {
+					var deferred = $q.defer();
+					$http.get(url, config)
+						.success(function(data) {
+							deferred.resolve(data);
+						})
+						.error(function(data) {
+							deferred.reject(data);
+						});
+					return deferred.promise;
+				},
+				
+				addCourse: function(course) {
+					var deferred = $q.defer();
+					$http.post(url, course, config)
+						.success(function(data) {
+							deferred.resolve(data);
+						})
+						.error(function(data) {
+							deferred.reject(data);
+						});
+					return deferred.promise;
+				},
+				
+				updateCourse: function(course) {
+					var deferred = $q.defer();
+					
+					var id = course._id.$oid;
+					
+					$http.put(url+"/"+id, course, config)
+						.success(function(data) {
+							deferred.resolve(data);
+						})
+						.error(function(data) {
+							deferred.reject(data);
+						});
+					
+					return deferred.promise;
+				},
+				
+				deleteCourse: function(course) {
+					var deferred = $q.defer();
+					
+					var id = course._id.$oid;
+					
+					$http.delete(url+"/"+id, config)
+						.success(function(data) {
+							deferred.resolve(data);
+						})
+						.error(function(data) {
+							deferred.reject(data);
+						});
+					
+					return deferred.promise;
+				},
+				
+				getCourseById: function(id) {
+					var deferred = $q.defer();
+					
+					$http.get(url+"/"+id, config)
+						.success(function(data) {
+							deferred.resolve(data);
+						})
+						.error(function(data) {
+							deferred.reject(data);
+						});
+						
+					return deferred.promise;
+				}
+			}
+		});
+		
+		myApp.controller("CourseCtrl", function($scope, courseDataSvc, $location, $routeParams) {
+		    $scope.courses = [];
+			
+			
+			if ($routeParams.id != undefined) {
+				courseDataSvc.getCourseById($routeParams.id).then(
+					function(data) {
+						$scope.courseToEdit = data;
+					}
+				)
+			}
+			
+			// to load all courses
+			$scope.loadCourses = function() {
+				courseDataSvc.getCourses().then(success, error);
+				
+				function success(response) {
+					$scope.courses = response;
+				}
+				
+				function error(e) {
+					console.log("error: ", e);
+				}
+			}
+			
+			$scope.loadCourses();
+			
+			$scope.addCourse = function(course) {
+				courseDataSvc.addCourse(course).then(
+					function(response) {
+						$scope.loadCourses();
+						$location.path("/courses");
+					},
+					function(error) {
+						console.log("error: ", e);
+					}
+				);
+			}
+			
+			$scope.updateCourse = function (course) {
+			    courseDataSvc.updateCourse(course).then(
+					function(response) {
+						$scope.loadCourses();
+						$location.path("/courses");
+					},
+					function(error) {
+						console.log("error: ", e);
+					}
+				);
+			}
+			
+			$scope.deleteCourse = function (course) {
+			    courseDataSvc.deleteCourse(course).then(
+					function(response) {
+						$scope.loadCourses();
+					},
+					function(error) {
+						console.log("error: ", e);
+					}
+				);
+			}
+		});
+	}());
+	
+  </script>
+</head>
+<body>
+	<div>
+		<a href="#/course/add">Add New Course</a>
+	</div>
+	<div ng-view>
+		
+	</div>
+</body>
+</html>

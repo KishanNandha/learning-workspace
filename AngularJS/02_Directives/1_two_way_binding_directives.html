@@ -1,0 +1,40 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Binding Directives</title>
+  <script src="../angular.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.controller("AppCtrl", function($scope) {
+		    $scope.contacts = [
+                { firstname: "John", lastname: "Smith", favourite: true },
+                { firstname: "Jimmy", lastname: "Jacob", favourite: false },
+                { firstname: "Charles", lastname: "Bailey", favourite: false },
+                { firstname: "Jacob", lastname: "Bateman", favourite: true },
+                { firstname: "Andrew", lastname: "Baxter", favourite: false }
+		    ];
+		});
+	}());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+	<div>
+        {{contacts[0].firstname + " " + contacts[0].lastname}} - {{ contacts[0].favourite }}
+        <input id="favourite" type="checkbox" ng-model="contacts[0].favourite" />
+    </div> <br />
+    <div>
+        <!-- ng-model is used for thow way data binding -->
+        First Name: <input id="firstName" type="text" ng-model="contacts[0].firstname" />
+        Last Name: <input id="lastName" type="text" ng-model="contacts[0].lastname" />
+    </div>
+</body>
+</html>

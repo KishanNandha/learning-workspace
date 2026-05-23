@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Binding Directives</title>
+  <script src="../angular.js"></script>
+  <style>
+      .odd {
+          background-color: tan;
+      }
+      .even {
+          background-color: gray;
+      }
+  </style>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.controller("AppCtrl", function($scope) {
+		    $scope.contacts = [
+                { firstname: "John", lastname: "Smith", favourite: true },
+                { firstname: "Jimmy", lastname: "Jacob", favourite: false },
+                { firstname: "Charles", lastname: "Bailey", favourite: false },
+                { firstname: "Jacob", lastname: "Bateman", favourite: true },
+                { firstname: "Andrew", lastname: "Baxter", favourite: false }
+		    ];
+
+		    $scope.contactUrl = "contacts.html";
+
+		    $scope.viewFile = function () {
+		        if ($scope.viewState) {
+		            return "contacts_list.html";
+		        } else {
+		            return "contacts.html";
+		        }
+		    }
+
+		    $scope.onPartialLoad = function () {
+		        console.log($scope.viewFile() + " loaded");
+		    }
+		});
+	}());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+	<input type="checkbox" ng-model="viewState" />Toggle List View
+	<!-- this will include file at run time  -->
+    <ng-include src="viewFile()" onload="onPartialLoad()"/>
+</body>
+</html>

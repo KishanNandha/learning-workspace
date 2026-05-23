@@ -1,0 +1,37 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Bootstrapping of AngularJS Applications</title>
+  <script src="angular.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.controller("AppCtrl", function($scope) {
+		    $scope.employee = {
+				name: "John Smith",
+				designation: "Web Developer"
+			}
+		});
+		//before bootstrasping module must be created and controller and all thing must be created.
+		
+		angular.element(document).ready(function() {
+		  angular.bootstrap(document, ['myApp']);
+		});
+	}());
+	
+  </script>
+</head>
+<body ng-init="title='Welcome'">
+	<div ng-controller="AppCtrl">
+		<h1>{{title}}</h1>
+		<p>{{employee.name}} - {{employee.designation}}</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title></title>
+        <script src="../angular.js"></script>
+        <script>
+            (function() {
+                var name = "myApp";
+                var required = [];
+                var app = angular.module(name,required);
+                //this is controller
+                app.controller("myController", function ($scope) {
+                    //$scope is globle var
+                    //employee is model
+                    $scope.employee = {
+                        name : "kishan",
+                        age: "21",
+                        isSkipper: true
+                    };
+                    $scope.onClickCheckbox = function () {
+                        console.log("isSkipper  "+$scope.employee.isSkipper);
+                    };
+                });
+            }())
+        </script>
+    </head>
+    <body ng-app="myApp">
+        <div ng-controller="myController">
+            {{ employee.name}} + {{employee.age}} 
+            <!-- ng-model binds data  -->
+            <input type="checkbox" ng-model="employee.isSkipper" ng-click="onClickCheckbox()"/>
+        </div>
+    </body>
+</html>

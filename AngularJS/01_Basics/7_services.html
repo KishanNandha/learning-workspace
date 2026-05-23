@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Single Responsibility Principle</title>
+  <script src="../angular.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		//services will be singleton 
+
+		myApp.service("addSvc",  function() {
+			this.add = function(firstNum, secondNum) {
+				return parseInt(firstNum) + parseInt(secondNum);
+			}
+		});
+		
+		myApp.service("subtractSvc",  function() {
+			this.subtract = function(firstNum, secondNum) {
+				return parseInt(firstNum) - parseInt(secondNum);
+			}
+		});
+		
+		myApp.controller("AppCtrl", function(addSvc, subtractSvc) {
+			this.operator = "+";
+			
+			this.setOperation = function(operator) {
+				this.operator = operator;
+			}
+			
+			this.calculate = function(firstNum, secondNum) {
+				if (this.operator === "+") {
+					this.result = addSvc.add(firstNum, secondNum);
+				} else if (this.operator === "-") {
+					this.result = subtractSvc.subtract(firstNum, secondNum);
+				}
+			}
+		});
+	}());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl as app">
+	
+	<h1>Addition of two numbers</h1>
+	
+	First Number: <input type="text" id="firstNumInput" 
+		ng-model="app.firstNum"/> </br>
+	Second Number: <input type="text" id="secondNumInput" 
+		ng-model="app.secondNum" /> </br>
+	Option: <button ng-click="app.setOperation('+')">Add (+)</button>
+			<button ng-click="app.setOperation('-')">Subtract (-)</button> </br>
+	
+	<button id="calculateBtn" 
+		ng-click="app.calculate(app.firstNum, app.secondNum)">
+		Calculate!
+	</button> </br>
+	
+	
+
+	<!-- ng-bind has one-way data binding ($scope -> view). It has a shortcut {{ val }} which displays the scope value $scope.val inserted into html where val is a variable name.
+
+	ng-model is intended to be put inside of form elements and has two-way data binding ($scope -> view and view -> $scope) e.g. <input ng-model="val"/>. -->
+
+
+	Result: <p id="result" ng-bind="app.result"></p>
+	
+</body>
+</html>

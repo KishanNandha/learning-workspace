@@ -1,0 +1,46 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Style Directives</title>
+  <script src="../angular.js"></script>
+  <style>
+	.strike {
+	  text-decoration: line-through;
+	}
+	.bold {
+		font-weight: bold;
+	}
+	.red {
+		color: red;
+	}
+  </style>
+  <script>      
+        (function () {
+              var name = "myApp",requires = [],myApp = null;
+              myApp = angular.module(name, requires);
+              myApp.controller("AppCtrl", function ($scope) {
+                  
+              });
+        }());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+	
+	<input type="text" ng-model="style" placeholder="Type: bold strike red">
+	<p ng-class="style">Using String Syntax</p>
+	
+	<hr>
+	
+	<input type="checkbox" ng-model="deleted"> deleted (apply "strike" class)<br>
+	<input type="checkbox" ng-model="important"> important (apply "bold" class)<br>
+	<input type="checkbox" ng-model="error"> error (apply "red" class)
+	<p ng-class="{strike: deleted, bold: important, red: error}">Map Syntax Example</p>
+	
+	<hr>
+	
+	<p ng-class="['strike', 'bold', 'red']">Using Array Syntax</p>
+	
+</body>
+</html>

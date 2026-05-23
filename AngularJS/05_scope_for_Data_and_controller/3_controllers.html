@@ -1,0 +1,105 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Controllers</title>
+  <script src="../angular.js"></script>
+  <script>      
+        (function () {
+              var name = "myApp",
+				  requires = [],
+				  myApp = null;
+				  
+              myApp = angular.module(name, requires);
+			  
+              myApp.controller("AppCtrl", function ($scope) {
+                 /*   //this is event listener
+                  $scope.$on("removeProduct", function(evt, product) {
+					console.log("remove product: ", data.name);
+				  }); */
+              });
+			  
+			  myApp.controller("ProductCtrl", function($scope, $rootScope) {
+					$scope.products = [{name:"Computer",price:350},{name:"Watch",price:50},{name:"Mobile",price:10},
+						{name:"Music System",price:80},{name:"Clothes",price:40}];
+						
+					$scope.addToCart = function(product) {
+                        //$broadcast for up to down
+						$rootScope.$broadcast("addProduct", product);
+					}
+			  });
+			  
+			  myApp.controller("CartCtrl", function($scope,$window) {
+					$scope.cart = [];
+                    $scope.cartTotal = 0;
+                    //this is event listener
+					$scope.$on("addProduct", add);
+					
+					function add(evt, product) {
+                        if(!$scope.cart.includes(product)) {
+                            $scope.cart.push(product);
+                           
+                            $scope.cart.forEach(function(item){
+                                $scope.cartTotal = $scope.cartTotal + item.price;
+                            });
+                            
+                          
+                        }
+                        else {
+                            $window.alert("Item already added!!");
+                        }
+					}
+					
+					$scope.removeFromCart = function(product) {
+                        /* //$emit for down to up and to others
+                        $scope.$emit("removeProduct", product); */
+                        var index = $scope.cart.indexOf(product);
+                        $scope.cart.splice(index, 1);
+					}
+			  });
+        }());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+    <table ng-controller="ProductCtrl">
+		<h1>Products</h1>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="product in products">
+                <td>{{$index+1}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price | currency}}</td>
+				<td><button ng-click="addToCart(product)">Add to Cart</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+	<table ng-controller="CartCtrl">
+		<h1>Cart</h1>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="product in cart">
+                <td>{{$index+1}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price | currency}}</td>
+                <td><button ng-click="removeFromCart(product)">Remove from Cart</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    Total:&nbsp; {{ cartTotal }}
+</body>
+</html>

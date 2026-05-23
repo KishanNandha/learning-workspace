@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title></title>
+        <script src="../angular.js"></script>
+        <script>
+            //we have put our module in iife 
+            (function () {
+                var name = "myApp"; //name of module 
+                var requires = []; //depedencies required by module(other modules)
+                angular.module(name,requires);
+            }()); //this is iife immadiatily invocaked function  
+        </script>
+    </head>
+    <body ng-app="myApp">
+
+    </body>
+</html>

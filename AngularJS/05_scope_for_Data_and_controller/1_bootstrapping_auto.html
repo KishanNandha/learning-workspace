@@ -1,0 +1,40 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>Bootstrapping of AngularJS Applications</title>
+  <script src="../angular.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.controller("AppCtrl", function($scope) {
+		    $scope.employee = {
+				name: "John Smith",
+				designation: "Web Developer"
+
+				//when dom loads it creates $injector 
+				//$injector will create $rootScope and $compile 
+				//$rootScope will be scope for entire application
+				//$compile is used for compilation process of html file
+				//$scope object will b created as a child of $rootScope for each controller
+			
+			}
+		});
+	}());
+	
+  </script>
+</head>
+<!-- //title will be created in rootScope -->
+<body ng-init="title='Welcome'">
+	<div ng-controller="AppCtrl">
+		<h1>{{title}}</h1>
+		<p>{{employee.name}} - {{employee.designation}}</p>
+	</div>
+</body>
+</html>

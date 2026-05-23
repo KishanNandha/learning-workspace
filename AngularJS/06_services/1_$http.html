@@ -1,0 +1,69 @@
+﻿<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>$http Service</title>
+  <script src="../angular.js"></script>
+  <script>
+	
+	(function() {
+		var name = "myApp",
+			requires = [],
+			myApp = null;
+		
+		myApp = angular.module(name, requires);
+		
+		myApp.controller("AppCtrl", function($scope, $http) {
+		    $scope.courses = [];
+
+		    $scope.loadData = function () {
+
+
+                /* before angular 1.4
+		        $http.get("courses.json").success(function (data) {
+		            $scope.courses = data;
+		        }).error(function (data) {
+		            console.log("something went wrong: ", data);
+		        }); */
+
+                 $http({
+                      method: 'GET',
+                        url: 'courses.json'
+                     }).then(function (response){
+                        $scope.courses = response;
+                          },function (error){
+                            console.log("something went wrong: ", error);
+                         });
+
+                
+		    }
+		});
+	}());
+	
+  </script>
+</head>
+<body ng-controller="AppCtrl">
+	<table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Course Name</th>
+                <th>Category</th>
+                <th>Timeline</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="course in courses">
+                <td>{{$index+1}}</td>
+                <td>{{course.name | uppercase}}</td>
+                <td>{{course.category | lowercase}}</td>
+                <td>{{course.timeline}}</td>
+                <td>{{course.price | currency}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button ng-click="loadData()">Load Data</button>
+</body>
+</html>

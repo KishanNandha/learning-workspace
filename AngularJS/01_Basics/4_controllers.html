@@ -1,0 +1,24 @@
+<html ng-app>
+    <head>
+        <title></title>
+        <script src="../angular.js"></script>
+        <script>
+            (function () {
+                var moduleName = "myApp";
+                var required = [];
+                var myApp = angular.module(moduleName,required);
+                myApp.controller("myController",function () {
+                    this.doAdd = function (firstNum,secondNum) {
+                        this.result = parseInt(firstNum)+psarseInt(secondNum);
+                    }
+                });
+            }());
+        </script>
+    </head>
+    <body ng-controller="myController as cont">
+        First Number: <input type="text" id="first" ng-model="cont.firstNum"/><br/>
+        Second Number: <input type="text" id="second" ng-model="cont.secondNum"/><br/>
+        <button ng-click="cont.doAdd(cont.firstnum,cont.secondNum)">Add!</button><br>
+        Result <p ng-bind="cont.result"></p>
+    </body>
+</html>

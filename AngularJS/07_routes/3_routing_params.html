@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+	<title>Routing</title>
+	<meta charset="utf-8"/>
+  <script src="../angular.js"></script>
+  <script src="../angular-route.js"></script>
+  <script>
+	
+	(function() {
+		var myApp = angular.module("myApp", ['ngRoute']);
+		
+		myApp.config(function($routeProvider) {
+			$routeProvider
+				.when("/sumurl/:a/:b", {
+					template: "a={{a}} b={{b}}",
+					controller: "SumCtrl"
+				})
+				.when("/suminput/:a?/:b?", {
+					template: "a={{a}} b={{b}} ",
+					controller: "InputCtrl"
+				})
+				.otherwise({
+					redirectTo: "/courses"
+				})
+		});
+		myApp.controller("SumCtrl",function($scope,$routeParams) {
+						$scope.a = $routeParams.a;
+						$scope.b = $routeParams.b;
+				});
+				myApp.controller("Ctrl",function($scope, $location,$interpolate) {
+					$scope.doSomething = function() {
+						var url = $interpolate('/suminput/{{num1}}/{{num2}}')($scope000000000
+					);
+						console.log(url);
+						$location.path(url);
+					}
+				});
+				myApp.controller("InputCtrl",function($scope,  $routeParams) {
+					$scope.a = $routeParams.a;
+						$scope.b = $routeParams.b;
+        });
+		
+	}());
+	
+  </script>
+</head>
+<body>
+	<div ng-controller="Ctrl">
+		<a href="#/sumurl/10/20">Add New Course</a>
+		Num1
+		<input type="number" ng-model="num1"/>
+		<br/>
+		Num2
+		<input type="number" ng-model="num2"/>
+		<br/>
+		<button ng-click="doSomething()">ADD</button>
+	</div>
+	<div ng-view>
+		
+	</div>
+</body>
+</html>
